@@ -46,6 +46,15 @@ export interface IWorkingCopyBackup<MetaType = object> {
 	content?: ITextSnapshot;
 }
 
+/**
+ * A working copy is an abstract concept to unify handling of
+ * things that can be worked on (e.g. edited) in an editor.
+ *
+ * Every working copy has in common that it is identified by
+ * a resource `URI` that is the backing store of the data
+ * (e.g. a file on disk, but it can be anything that is
+ * supported through our file system APIs).
+ */
 export interface IWorkingCopy {
 
 	/**
@@ -160,9 +169,11 @@ export interface IWorkingCopyService {
 
 	/**
 	 * Register a new working copy with the service. This method will
-	 * throw if you try to register a working copy with a resource
-	 * that was already registered before. There can only be 1 working
-	 * copy per resource registered to the service.
+	 * throw if you try to register a working copy on a resource that
+	 * has already been registered.
+	 *
+	 * Overall there can only ever be 1 working copy with the same
+	 * resource.
 	 */
 	registerWorkingCopy(workingCopy: IWorkingCopy): IDisposable;
 
